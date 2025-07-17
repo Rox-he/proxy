@@ -29,6 +29,9 @@ app.post('/post-data', async (req, res) => {
     res.status(500).send('Error reenviando a Railway');
   }
 });
+app.get('/', (req, res) => {
+  res.send('Servidor Express funcionando correctamente');
+});
 
 app.listen(PORT, () => {
   console.log(`🚀 Intermediario escuchando en puerto ${PORT}`);
