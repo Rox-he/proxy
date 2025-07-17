@@ -16,11 +16,11 @@ app.post('/post-data', async (req, res) => {
 
   try {
     // Redirigir la solicitud a tu API en Railway
-    const response = await axios.post(
-      'https://servidor-iot-production-348d.up.railway.app/post-data',
-      { api_key, value1, value2 },
-      { headers: { 'Content-Type': 'application/json' } }
-    );
+const response = await axios.post(
+  'http://servidor-iot-production-348d.up.railway.app/post-data', // Nota el http://
+  { api_key, value1, value2 },
+  { headers: { 'Content-Type': 'application/json' } }
+);
 
     console.log("Respuesta de Railway:", response.data);
     res.send('Datos enviados a Railway');
