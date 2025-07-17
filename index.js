@@ -8,11 +8,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware para manejo de conexiones
 app.use((req, res, next) => {
-  // Permitir conexiones HTTP directamente (para SIM800L)
-  if (req.headers['x-forwarded-proto'] === 'https') {
+  // Desactivar redirección HTTPS para SIM800L
+  if (req.headers['user-agent'] && req.headers['user-agent'].includes('SIM800L')) {
     return next();
   }
-  res.set('Connection', 'close');
+  // Redirección normal para otros clientes
+  if (req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect(307, 'https://' + req.headers.host + req.url);
+  }
   next();
 });
 
