@@ -17,10 +17,15 @@ app.post('/post-data', async (req, res) => {
   try {
     // Redirigir la solicitud a tu API en Railway
 const response = await axios.post(
-  'http://servidor-iot-production-348d.up.railway.app/post-data', // Nota el http://
+  'http://servidor-iot-production-348d.up.railway.app/post-data',
   { api_key, value1, value2 },
-  { headers: { 'Content-Type': 'application/json' } }
+  { 
+    headers: { 'Content-Type': 'application/json' },
+    timeout: 5000 // 5 segundos timeout
+  }
 );
+
+
 
     console.log("Respuesta de Railway:", response.data);
     res.send('Datos enviados a Railway');
@@ -35,4 +40,9 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Intermediario escuchando en puerto ${PORT}`);
+});
+
+app.use((req, res, next) => {
+  res.set('Connection', 'close');
+  next();
 });
